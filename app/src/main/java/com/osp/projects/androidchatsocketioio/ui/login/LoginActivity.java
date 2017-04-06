@@ -1,15 +1,24 @@
 package com.osp.projects.androidchatsocketioio.ui.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.osp.projects.androidchatsocketioio.R;
+import com.osp.projects.androidchatsocketioio.model.entity.UserEntity;
+import com.osp.projects.androidchatsocketioio.persistence.MySharedPreference;
+import com.osp.projects.androidchatsocketioio.ui.rooms.RoomsActivity;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LoginView, View.OnClickListener{
+
+    private LoginPresenter loginPresenter;
+    private EditText txtNickname;
+    private Button btnJoin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +27,53 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        txtNickname = (EditText) findViewById(R.id.txtNickName);
+        btnJoin = (Button) findViewById(R.id.btnJoin);
+
+        loginPresenter = new LoginPresenterImpl(this);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab.setOnClickListener(this);
+        btnJoin.setOnClickListener(this);
+
+
     }
 
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void setUsernameError() {
+
+    }
+
+    @Override
+    public void setPasswordError() {
+
+    }
+
+    @Override
+    public void navigateToMain(UserEntity userEntity) {
+        MySharedPreference.storeUser(this, userEntity);
+        Intent intent = new Intent(this, RoomsActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btnJoin:
+                    loginPresenter.validateJoin(txtNickname.getText().toString().trim());
+                break;
+        }
+    }
 }
