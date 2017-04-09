@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.osp.projects.androidchatsocketioio.R;
-import com.osp.projects.androidchatsocketioio.model.entity.UserEntity;
 import com.osp.projects.androidchatsocketioio.persistence.MySharedPreference;
 import com.osp.projects.androidchatsocketioio.ui.rooms.RoomsActivity;
 
@@ -19,25 +18,27 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
     private LoginPresenter loginPresenter;
     private EditText txtNickname;
     private Button btnJoin;
+    private MySharedPreference mySharedPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mySharedPreference = new MySharedPreference(this);
+        if(mySharedPreference.getUser().getUserId() > 0){
+            navigateToMain();
+        }
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         txtNickname = (EditText) findViewById(R.id.txtNickName);
         btnJoin = (Button) findViewById(R.id.btnJoin);
 
-        loginPresenter = new LoginPresenterImpl(this);
+        loginPresenter = new LoginPresenterImpl(this, mySharedPreference);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
         btnJoin.setOnClickListener(this);
-
-
     }
 
     @Override
@@ -61,8 +62,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView, View.
     }
 
     @Override
-    public void navigateToMain(UserEntity userEntity) {
-        MySharedPreference.storeUser(this, userEntity);
+    public void navigateToMain() {
         Intent intent = new Intent(this, RoomsActivity.class);
         startActivity(intent);
         finish();

@@ -1,6 +1,6 @@
 package com.osp.projects.androidchatsocketioio.util.api;
 
-import com.osp.projects.androidchatsocketioio.util.Constants;
+import com.osp.projects.androidchatsocketioio.util.EndPointConstant;
 
 import java.util.concurrent.TimeUnit;
 
@@ -14,13 +14,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * CarlitosDroid
  */
 
-public class ChatRoomApiManager {
+public class ChatDemoApiManager {
 
-    private static ChatRoomApi chatRoomApi;
+    private static ChatDemoApi chatDemoApi;
 
-    public static ChatRoomApi apiManager(){
+    public static ChatDemoApi apiManager(){
 
-        if(chatRoomApi == null){
+        if(chatDemoApi == null){
 
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 
@@ -33,15 +33,15 @@ public class ChatRoomApiManager {
                     .build();
 
             Retrofit client = new Retrofit.Builder()
-                    .baseUrl(Constants.BASE_URL)
+                    .baseUrl(EndPointConstant.BASE_URL)
                     .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
 
-            chatRoomApi = client.create(ChatRoomApi.class);
+            chatDemoApi = client.create(ChatDemoApi.class);
         }
 
-        return chatRoomApi;
+        return chatDemoApi;
     }
 }

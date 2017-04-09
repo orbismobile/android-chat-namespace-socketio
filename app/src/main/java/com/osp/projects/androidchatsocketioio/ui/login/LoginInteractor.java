@@ -2,8 +2,7 @@ package com.osp.projects.androidchatsocketioio.ui.login;
 
 
 import com.osp.projects.androidchatsocketioio.model.entity.UserEntity;
-import com.osp.projects.androidchatsocketioio.model.request.RegisterRequest;
-import com.osp.projects.androidchatsocketioio.model.response.RegisterResponse;
+import com.osp.projects.androidchatsocketioio.model.request.PostUserRequest;
 
 /**
  * Created by Carlos Leonardo Camilo Vargas Huamán on 6/04/17.
@@ -13,10 +12,14 @@ import com.osp.projects.androidchatsocketioio.model.response.RegisterResponse;
 public interface LoginInteractor {
 
     interface OnLoginFinished {
-        void onSuccessful(UserEntity userEntity);
+        void onSuccessfulGetUser(UserEntity userEntity);
+        void onSuccessful();
         void onError();
         void onFailure();
     }
 
-    void serviceLogin(RegisterRequest registerRequest, OnLoginFinished listener);
+    void serviceGetUser(OnLoginFinished listener);
+    void serviceGetUserByNickname(String nickname, OnLoginFinished listener);
+    void serviceGetFriendsByUserId(OnLoginFinished listener);
+    void servicePostUser(PostUserRequest postUserRequest, OnLoginFinished listener);
 }

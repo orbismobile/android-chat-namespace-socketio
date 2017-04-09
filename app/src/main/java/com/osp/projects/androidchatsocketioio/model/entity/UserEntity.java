@@ -9,15 +9,14 @@ public class UserEntity {
 
     private int userId;
     private String userName;
-    private String userRoom;
+
 
     public UserEntity() {
     }
 
-    public UserEntity(int userId, String userName, String userRoom) {
+    public UserEntity(int userId, String userName) {
         this.userId = userId;
         this.userName = userName;
-        this.userRoom = userRoom;
     }
 
     public int getUserId() {
@@ -34,13 +33,5 @@ public class UserEntity {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public String getUserRoom() {
-        return userRoom;
-    }
-
-    public void setUserRoom(String userRoom) {
-        this.userRoom = userRoom;
     }
 }

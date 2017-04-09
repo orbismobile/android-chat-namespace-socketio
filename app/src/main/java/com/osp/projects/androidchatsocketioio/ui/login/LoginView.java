@@ -17,6 +17,6 @@ public interface LoginView {
 
     void setPasswordError();
 
-    void navigateToMain(UserEntity userEntity);
+    void navigateToMain();
 
 }

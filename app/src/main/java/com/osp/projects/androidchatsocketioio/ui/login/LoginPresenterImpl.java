@@ -3,7 +3,9 @@ package com.osp.projects.androidchatsocketioio.ui.login;
 import android.text.TextUtils;
 
 import com.osp.projects.androidchatsocketioio.model.entity.UserEntity;
+import com.osp.projects.androidchatsocketioio.model.request.PostUserRequest;
 import com.osp.projects.androidchatsocketioio.model.request.RegisterRequest;
+import com.osp.projects.androidchatsocketioio.persistence.MySharedPreference;
 
 /**
  * Created by Carlos Leonardo Camilo Vargas Huamán on 6/04/17.
@@ -12,14 +14,15 @@ import com.osp.projects.androidchatsocketioio.model.request.RegisterRequest;
 
 public class LoginPresenterImpl implements LoginPresenter, LoginInteractor.OnLoginFinished{
 
-
-
     private LoginView loginView;
     private LoginInteractor loginInteractor;
+    private String userNickname;
+    private MySharedPreference mySharedPreference;
 
-    public LoginPresenterImpl(LoginView loginView) {
+    public LoginPresenterImpl(LoginView loginView, MySharedPreference mySharedPreference) {
         this.loginView = loginView;
         this.loginInteractor = new LoginInteractorImpl();
+        this.mySharedPreference = mySharedPreference;
     }
 
 
@@ -50,14 +53,21 @@ public class LoginPresenterImpl implements LoginPresenter, LoginInteractor.OnLog
            // txtUserName.requestFocus();
             return;
         }
-
-        RegisterRequest registerRequest = new RegisterRequest(userNickname, userNickname+"Room");
-        loginInteractor.serviceLogin(registerRequest, this);
+        this.userNickname = userNickname;
+        PostUserRequest postUserRequest = new PostUserRequest();
+        postUserRequest.setUserName(userNickname);
+        loginInteractor.servicePostUser(postUserRequest, this);
     }
 
     @Override
-    public void onSuccessful(UserEntity userEntity) {
-        loginView.navigateToMain(userEntity);
+    public void onSuccessful() {
+        loginInteractor.serviceGetUserByNickname(userNickname, this);
+    }
+
+    @Override
+    public void onSuccessfulGetUser(UserEntity userEntity) {
+        mySharedPreference.storeUser(userEntity);
+        loginView.navigateToMain();
     }
 
     @Override
