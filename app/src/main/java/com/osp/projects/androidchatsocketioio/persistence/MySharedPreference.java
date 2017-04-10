@@ -37,7 +37,7 @@ public class MySharedPreference {
         editor.putInt(KEY_USER_ID, userEntity.getUserId());
         editor.putString(KEY_USER_NAME, userEntity.getUserName());
         //editor.putString(KEY_USER_ROOM, userEntity.getUserName());
-        Log.e("MySharePreferences", "User "+ userEntity.getUserName() +" - "+ userEntity.getUserName()
+        Log.e("MySharePreferences", "User "+ userEntity.getUserId() +" - "+ userEntity.getUserName()
                 +" stored in shared preferences. ");
         editor.apply();
     }

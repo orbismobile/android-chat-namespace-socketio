@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import com.osp.projects.androidchatsocketioio.R;
 import com.osp.projects.androidchatsocketioio.model.entity.RoomEntity;
+import com.osp.projects.androidchatsocketioio.ui.main.MainActivity;
 import com.osp.projects.androidchatsocketioio.ui.rooms.RoomsActivity;
 
 import java.util.List;
@@ -22,9 +23,9 @@ import java.util.List;
 public class RoomsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<RoomEntity> roomsList;
-    private RoomsActivity roomsActivity;
+    private MainActivity roomsActivity;
 
-    public RoomsAdapter(RoomsActivity roomsActivity, List<RoomEntity> roomsList) {
+    public RoomsAdapter(MainActivity roomsActivity, List<RoomEntity> roomsList) {
         this.roomsList = roomsList;
         this.roomsActivity = roomsActivity;
     }
@@ -69,7 +70,7 @@ public class RoomsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.container:
-                    //roomsActivity.goToMainActivity(getAdapterPosition());
+                    roomsActivity.navigateToMain(getAdapterPosition());
                     break;
             }
         }
