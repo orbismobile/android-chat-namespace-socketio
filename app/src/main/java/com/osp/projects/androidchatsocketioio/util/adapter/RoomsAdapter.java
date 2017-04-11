@@ -1,5 +1,7 @@
 package com.osp.projects.androidchatsocketioio.util.adapter;
 
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -53,13 +55,13 @@ public class RoomsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         AppCompatTextView lblTitle;
         AppCompatTextView lblDescription;
-        LinearLayout container;
+        ConstraintLayout container;
         AppCompatImageView imgUser;
 
         public RoomItemViewHolder(View itemView) {
             super(itemView);
             imgUser = (AppCompatImageView) itemView.findViewById(R.id.imgUser);
-            container = (LinearLayout) itemView.findViewById(R.id.container);
+            container = (ConstraintLayout) itemView.findViewById(R.id.container);
             lblTitle = (AppCompatTextView) itemView.findViewById(R.id.lblTitle);
             lblDescription = (AppCompatTextView) itemView.findViewById(R.id.lblDescription);
 
