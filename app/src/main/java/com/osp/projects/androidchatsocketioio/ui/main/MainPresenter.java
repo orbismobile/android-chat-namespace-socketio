@@ -11,4 +11,7 @@ public interface MainPresenter {
     void initialMenuOptionData();
     void configMenuOptionAdapter(LoginActivity mainActivity);
     void configRestaurantAdapter(LoginActivity mainActivity);
+
+
+    void serviceFriends(int userId);
 }

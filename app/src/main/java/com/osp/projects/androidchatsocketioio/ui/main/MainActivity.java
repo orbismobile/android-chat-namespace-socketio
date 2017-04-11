@@ -4,74 +4,81 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.socketio.client.Socket;
 import com.osp.projects.androidchatsocketioio.R;
-import com.osp.projects.androidchatsocketioio.app.ChatDemoApplication;
 import com.osp.projects.androidchatsocketioio.model.entity.RoomEntity;
-import com.osp.projects.androidchatsocketioio.ui.rooms.RoomsActivity;
-import com.osp.projects.androidchatsocketioio.ui.rooms.RoomsPresenter;
+import com.osp.projects.androidchatsocketioio.persistence.MySharedPreference;
+import com.osp.projects.androidchatsocketioio.ui.fragment.adduser.AddUserDialogFragment;
+import com.osp.projects.androidchatsocketioio.ui.rooms.RoomActivity;
+import com.osp.projects.androidchatsocketioio.ui.rooms.RoomPresenter;
 import com.osp.projects.androidchatsocketioio.util.Constants;
-import com.osp.projects.androidchatsocketioio.util.adapter.MessageAdapter;
-import com.osp.projects.androidchatsocketioio.util.adapter.RoomsAdapter;
+import com.osp.projects.androidchatsocketioio.util.adapter.RoomAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements MainView{
+import static com.osp.projects.androidchatsocketioio.R.id.fab;
+
+public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener{
 
     private Boolean isUserConnected = false;
 
     private RecyclerView rcvRooms;
     private LinearLayoutManager linearLayoutManager;
-    private RoomsAdapter roomsAdapter;
+    private RoomAdapter roomAdapter;
     private List<RoomEntity> roomsList;
 
-    private RoomsPresenter roomsPresenter;
+    private MainPresenter mainPresenter;
+    private MySharedPreference mySharedPreference;
+
+    private FloatingActionButton fabAddUser;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        fabAddUser = (FloatingActionButton) findViewById(R.id.fabAddUser);
+
 
         rcvRooms = (RecyclerView) findViewById(R.id.rcvRooms);
         linearLayoutManager = new LinearLayoutManager(this);
         roomsList = new ArrayList<>();
-        roomsAdapter = new RoomsAdapter(this, roomsList);
+        roomAdapter = new RoomAdapter(this, roomsList);
 
         rcvRooms.setLayoutManager(linearLayoutManager);
-        rcvRooms.setAdapter(roomsAdapter);
+        rcvRooms.setAdapter(roomAdapter);
 
-
+        /*
         roomsList.add(new RoomEntity("CarlosRoom", "Grupo de Carlos", "description", "12:36pm", R.drawable.ic_boy1));
         roomsList.add(new RoomEntity("LuisRoom", "Grupo de Luis", "description", "12:36pm", R.drawable.ic_boy2));
         roomsList.add(new RoomEntity("MaríaRoom", "Grupo de María", "description", "12:36pm", R.drawable.ic_girl));
 
-        roomsAdapter.notifyDataSetChanged();
+        */
+
+        //roomAdapter.notifyDataSetChanged();
+
+        mySharedPreference = new MySharedPreference(this);
 
         //roomService(1);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
+        mainPresenter = new MainPresenterImpl(this);
+
+        mainPresenter.serviceFriends(mySharedPreference.getUser().getUserId());
+
+        fabAddUser.setOnClickListener(this);
+
     }
 
     @Override
@@ -98,8 +105,20 @@ public class MainActivity extends AppCompatActivity implements MainView{
 
     @Override
     public void navigateToMain(int itemPosition) {
-        Intent intent = new Intent(this, RoomsActivity.class);
+        Intent intent = new Intent(this, RoomActivity.class);
         intent.putExtra(Constants.ROOM_ENTITY, roomsList.get(itemPosition));
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.fabAddUser:
+                FragmentManager fm = this.getSupportFragmentManager();
+                AddUserDialogFragment addUserDialogFragment =
+                        AddUserDialogFragment.newInstance("test","test");
+                addUserDialogFragment.show(fm, "carlitois");
+                break;
+        }
     }
 }
