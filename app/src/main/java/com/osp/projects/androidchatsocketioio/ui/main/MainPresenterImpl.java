@@ -2,7 +2,13 @@ package com.osp.projects.androidchatsocketioio.ui.main;
 
 import android.util.Log;
 
+
+import com.osp.projects.androidchatsocketioio.model.response.GetFriendsByUserIdResponse;
 import com.osp.projects.androidchatsocketioio.ui.login.LoginActivity;
+import com.osp.projects.androidchatsocketioio.util.adapter.RoomAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Carlos Leonardo Camilo Vargas Huamán on 6/04/17.
@@ -15,10 +21,14 @@ public class MainPresenterImpl implements MainPresenter, MainInteractor.OnGetFri
 
     private MainView mainView;
     private MainInteractor mainInteractor;
+    private List<GetFriendsByUserIdResponse.DataBean> friendsBeanList = new ArrayList<>();
+
+    private RoomAdapter roomAdapter;
 
     public MainPresenterImpl(MainView mainView){
         this.mainView = mainView;
         this.mainInteractor = new MainInteractorImpl();
+        roomAdapter = new RoomAdapter(mainView, friendsBeanList);
     }
 
     @Override
@@ -42,16 +52,19 @@ public class MainPresenterImpl implements MainPresenter, MainInteractor.OnGetFri
     }
 
     @Override
+    public void configRecyclerView() {
+        mainView.configRecyclerView(roomAdapter);
+    }
+
+    @Override
     public void serviceFriends(int userId) {
         mainInteractor.serviceGetFriendsByUserId(userId, this);
     }
 
     @Override
-    public void onSuccessful() {
-
-        Log.e("SUCCESS","SUCCESS");
-
-
+    public void onSuccessful(List<GetFriendsByUserIdResponse.DataBean> friendsBeanList) {
+        this.friendsBeanList.addAll(friendsBeanList);
+        mainView.hideSwipeRefresh();
     }
 
     @Override

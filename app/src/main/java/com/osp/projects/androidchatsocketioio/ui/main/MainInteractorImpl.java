@@ -1,6 +1,8 @@
 package com.osp.projects.androidchatsocketioio.ui.main;
 
 
+import android.util.Log;
+
 import com.osp.projects.androidchatsocketioio.model.response.GetFriendsByUserIdResponse;
 import com.osp.projects.androidchatsocketioio.util.api.ChatDemoApiManager;
 
@@ -24,7 +26,7 @@ public class MainInteractorImpl implements MainInteractor {
             @Override
             public void onResponse(Call<GetFriendsByUserIdResponse> call, Response<GetFriendsByUserIdResponse> response) {
                 if(response.isSuccessful()){
-                    listener.onSuccessful();
+                    listener.onSuccessful(response.body().getData());
                 }else{
                     listener.onError();
                 }

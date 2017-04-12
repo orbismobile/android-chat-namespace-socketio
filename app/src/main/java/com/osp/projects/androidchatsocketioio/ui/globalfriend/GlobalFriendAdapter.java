@@ -15,6 +15,7 @@ import java.util.List;
 
 /**
  * Created by Carlos Leonardo Camilo Vargas Huamán on 4/12/17.
+ *
  */
 
 public class GlobalFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -35,9 +36,8 @@ public class GlobalFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-//        ((RoomItemViewHolder)holder).lblTitle.setText(roomsList.get(position).getUserName());
-//        ((RoomItemViewHolder)holder).lblDescription.setText(roomsList.get(position).getDescription());
-//        ((RoomItemViewHolder)holder).imgUser.setImageResource(roomsList.get(position).getImgDrawable());
+
+        ((FriendItemViewHolder)holder).lblFriendName.setText(friendEntityList.get(position).getUserName());
     }
 
     @Override

@@ -72,8 +72,8 @@ public class GlobalFriendsActivity extends AppCompatActivity {
 
     public void servicePostUser(int itemPosition){
         PostFriendRequest postFriendRequest = new PostFriendRequest();
-        postFriendRequest.setFriendId(mySharedPreference.getUser().getUserId());
-        postFriendRequest.setUserId(dataBeanList.get(itemPosition).getUserId());
+        postFriendRequest.setFriendId(dataBeanList.get(itemPosition).getUserId());
+        postFriendRequest.setUserId(mySharedPreference.getUser().getUserId());
 
         Call<PostFriendResponse> call = ChatDemoApiManager.apiManager()
                 .postFriend(postFriendRequest);
@@ -81,7 +81,7 @@ public class GlobalFriendsActivity extends AppCompatActivity {
         call.enqueue(new Callback<PostFriendResponse>() {
             @Override
             public void onResponse(Call<PostFriendResponse> call, Response<PostFriendResponse> response) {
-
+                finish();
             }
 
             @Override

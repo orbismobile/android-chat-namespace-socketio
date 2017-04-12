@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 
 import com.osp.projects.androidchatsocketioio.R;
 import com.osp.projects.androidchatsocketioio.model.entity.RoomEntity;
+import com.osp.projects.androidchatsocketioio.model.response.GetFriendsByUserIdResponse;
 import com.osp.projects.androidchatsocketioio.ui.main.MainActivity;
+import com.osp.projects.androidchatsocketioio.ui.main.MainView;
 
 import java.util.List;
 
@@ -21,12 +23,12 @@ import java.util.List;
  */
 public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<RoomEntity> roomsList;
-    private MainActivity roomsActivity;
+    private List<GetFriendsByUserIdResponse.DataBean> roomsList;
+    private MainView mainView;
 
-    public RoomAdapter(MainActivity roomsActivity, List<RoomEntity> roomsList) {
+    public RoomAdapter(MainView mainView, List<GetFriendsByUserIdResponse.DataBean> roomsList) {
         this.roomsList = roomsList;
-        this.roomsActivity = roomsActivity;
+        this.mainView = mainView;
     }
 
     @Override
@@ -38,8 +40,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ((RoomItemViewHolder)holder).lblTitle.setText(roomsList.get(position).getUserName());
-        ((RoomItemViewHolder)holder).lblDescription.setText(roomsList.get(position).getDescription());
-        ((RoomItemViewHolder)holder).imgUser.setImageResource(roomsList.get(position).getImgDrawable());
+        ((RoomItemViewHolder)holder).lblDescription.setText(roomsList.get(position).getUserName());
+        //((RoomItemViewHolder)holder).imgUser.setImageResource(roomsList.get(position).get());
     }
 
     @Override
@@ -69,7 +71,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.container:
-                    roomsActivity.navigateToMain(getAdapterPosition());
+                    //roomsActivity.navigateToMain(getAdapterPosition());
                     break;
             }
         }

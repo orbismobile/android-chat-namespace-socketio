@@ -8,15 +8,16 @@ import java.util.List;
 
 public class GetFriendsByUserIdResponse {
 
+
     /**
      * status : SUCCESS
      * message : Friend were found
-     * friends : [{"id_user":1,"friend_name":"eduardo"},{"id_user":1,"friend_name":"wallo"},{"id_user":1,"friend_name":"alexis"}]
+     * data : [{"friendId":1,"userName":"carlos"},{"friendId":3,"userName":"carlo"},{"friendId":4,"userName":"ricardo"}]
      */
 
     private String status;
     private String message;
-    private List<FriendsBean> friends;
+    private List<DataBean> data;
 
     public String getStatus() {
         return status;
@@ -34,37 +35,37 @@ public class GetFriendsByUserIdResponse {
         this.message = message;
     }
 
-    public List<FriendsBean> getFriends() {
-        return friends;
+    public List<DataBean> getData() {
+        return data;
     }
 
-    public void setFriends(List<FriendsBean> friends) {
-        this.friends = friends;
+    public void setData(List<DataBean> data) {
+        this.data = data;
     }
 
-    public static class FriendsBean {
+    public static class DataBean {
         /**
-         * id_user : 1
-         * friend_name : eduardo
+         * friendId : 1
+         * userName : carlos
          */
 
-        private int id_user;
-        private String friend_name;
+        private int friendId;
+        private String userName;
 
-        public int getId_user() {
-            return id_user;
+        public int getFriendId() {
+            return friendId;
         }
 
-        public void setId_user(int id_user) {
-            this.id_user = id_user;
+        public void setFriendId(int friendId) {
+            this.friendId = friendId;
         }
 
-        public String getFriend_name() {
-            return friend_name;
+        public String getUserName() {
+            return userName;
         }
 
-        public void setFriend_name(String friend_name) {
-            this.friend_name = friend_name;
+        public void setUserName(String userName) {
+            this.userName = userName;
         }
     }
 }

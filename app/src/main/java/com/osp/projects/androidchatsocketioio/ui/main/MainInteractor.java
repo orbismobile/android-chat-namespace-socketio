@@ -1,5 +1,9 @@
 package com.osp.projects.androidchatsocketioio.ui.main;
 
+import com.osp.projects.androidchatsocketioio.model.response.GetFriendsByUserIdResponse;
+
+import java.util.List;
+
 /**
  * Created by Carlos Leonardo Camilo Vargas Huamán on 6/04/17.
  *
@@ -9,7 +13,7 @@ package com.osp.projects.androidchatsocketioio.ui.main;
 public interface MainInteractor {
 
     interface OnGetFriendsFinished {
-        void onSuccessful();
+        void onSuccessful(List<GetFriendsByUserIdResponse.DataBean> friendsBeanList);
         void onError();
         void onFailure();
     }

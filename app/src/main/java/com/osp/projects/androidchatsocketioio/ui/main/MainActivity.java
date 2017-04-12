@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,37 +16,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.osp.projects.androidchatsocketioio.R;
-import com.osp.projects.androidchatsocketioio.model.entity.RoomEntity;
 import com.osp.projects.androidchatsocketioio.persistence.MySharedPreference;
-import com.osp.projects.androidchatsocketioio.ui.fragment.adduser.AddUserDialogFragment;
-import com.osp.projects.androidchatsocketioio.ui.fragment.adduser.AddUserInteractor;
 import com.osp.projects.androidchatsocketioio.ui.globalfriend.GlobalFriendsActivity;
-import com.osp.projects.androidchatsocketioio.ui.rooms.RoomActivity;
-import com.osp.projects.androidchatsocketioio.ui.rooms.RoomPresenter;
-import com.osp.projects.androidchatsocketioio.util.Constants;
 import com.osp.projects.androidchatsocketioio.util.adapter.RoomAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import static com.osp.projects.androidchatsocketioio.R.id.fab;
-
-public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener, AddUserInteractor.OnAddUserFinished{
+public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
 
     private Boolean isUserConnected = false;
 
     private RecyclerView rcvRooms;
     private LinearLayoutManager linearLayoutManager;
-    private RoomAdapter roomAdapter;
-    private List<RoomEntity> roomsList;
+
+
 
     private MainPresenter mainPresenter;
     private MySharedPreference mySharedPreference;
 
     private FloatingActionButton fabAddUser;
+    private SwipeRefreshLayout swpRefresh;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -54,29 +46,16 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
 
         rcvRooms = (RecyclerView) findViewById(R.id.rcvRooms);
+        swpRefresh = (SwipeRefreshLayout) findViewById(R.id.swpRefresh);
         linearLayoutManager = new LinearLayoutManager(this);
-        roomsList = new ArrayList<>();
-        roomAdapter = new RoomAdapter(this, roomsList);
-
         rcvRooms.setLayoutManager(linearLayoutManager);
-        rcvRooms.setAdapter(roomAdapter);
-
-        /*
-        roomsList.add(new RoomEntity("CarlosRoom", "Grupo de Carlos", "description", "12:36pm", R.drawable.ic_boy1));
-        roomsList.add(new RoomEntity("LuisRoom", "Grupo de Luis", "description", "12:36pm", R.drawable.ic_boy2));
-        roomsList.add(new RoomEntity("MaríaRoom", "Grupo de María", "description", "12:36pm", R.drawable.ic_girl));
-
-        */
-
-        //roomAdapter.notifyDataSetChanged();
 
         mySharedPreference = new MySharedPreference(this);
 
-        //roomService(1);
-
+        swpRefresh.setOnRefreshListener(this);
 
         mainPresenter = new MainPresenterImpl(this);
-
+        mainPresenter.configRecyclerView();
         mainPresenter.serviceFriends(mySharedPreference.getUser().getUserId());
 
         fabAddUser.setOnClickListener(this);
@@ -107,9 +86,22 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
     @Override
     public void navigateToMain(int itemPosition) {
-        Intent intent = new Intent(this, RoomActivity.class);
+        /*Intent intent = new Intent(this, RoomActivity.class);
         intent.putExtra(Constants.ROOM_ENTITY, roomsList.get(itemPosition));
-        startActivity(intent);
+        startActivity(intent);*/
+    }
+
+    @Override
+    public void configRecyclerView(RoomAdapter roomAdapter) {
+        rcvRooms.setAdapter(roomAdapter);
+    }
+
+    @Override
+    public void hideSwipeRefresh() {
+        if(swpRefresh.isRefreshing()){
+            swpRefresh.setRefreshing(false);
+
+        }
     }
 
     @Override
@@ -126,17 +118,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     }
 
     @Override
-    public void onSuccessful() {
-        Log.e("ONSUCCESSFUL","ONSUCCESSFUL");
-    }
-
-    @Override
-    public void onError() {
-
-    }
-
-    @Override
-    public void onFailure() {
-
+    public void onRefresh() {
+        mainPresenter.serviceFriends(mySharedPreference.getUser().getUserId());
     }
 }
