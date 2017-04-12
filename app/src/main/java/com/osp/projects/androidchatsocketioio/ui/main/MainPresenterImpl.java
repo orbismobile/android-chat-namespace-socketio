@@ -25,9 +25,15 @@ public class MainPresenterImpl implements MainPresenter, MainInteractor.OnGetFri
 
     private RoomAdapter roomAdapter;
 
+    GetFriendsByUserIdResponse.DataBean dataBean = new GetFriendsByUserIdResponse.DataBean();
+
     public MainPresenterImpl(MainView mainView){
         this.mainView = mainView;
         this.mainInteractor = new MainInteractorImpl();
+        dataBean.setFriendId(0);
+        dataBean.setUserName("general");
+        dataBean = new GetFriendsByUserIdResponse.DataBean();
+        friendsBeanList.add(dataBean);
         roomAdapter = new RoomAdapter(mainView, friendsBeanList);
     }
 

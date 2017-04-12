@@ -32,8 +32,6 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     private RecyclerView rcvRooms;
     private LinearLayoutManager linearLayoutManager;
 
-
-
     private MainPresenter mainPresenter;
     private MySharedPreference mySharedPreference;
 
@@ -60,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
         mainPresenter = new MainPresenterImpl(this);
         mainPresenter.configRecyclerView();
-        mainPresenter.serviceFriends(mySharedPreference.getUser().getUserId());
+        //mainPresenter.serviceFriends(mySharedPreference.getUser().getUserId());
 
         fabAddUser.setOnClickListener(this);
 

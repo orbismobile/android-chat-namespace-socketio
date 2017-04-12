@@ -23,6 +23,15 @@ public class Constants {
     public static final String EVENT_UPDATE_CHAT = "updateChat";
 
 
+    // DN : Default Namespace
+    public static final String EVENT_ON_DEFAULT_DN_CONNECT = "onDNConnect";
+
+
+    // DN : Default Namespace
+    public static final String EVENT_ON_MESSAGE_TO_DN_EMMITED = "onMessageToDNEmitted";
+
+
+
 
     public static final int REQUEST_TO_LOGIN = 100;
 

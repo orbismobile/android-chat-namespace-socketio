@@ -83,6 +83,7 @@ public class RoomActivity extends AppCompatActivity implements RoomView, View.On
         socket.on(Socket.EVENT_CONNECT, onConnect);
         socket.on(Socket.EVENT_DISCONNECT, onDisconnect);
         socket.on(Constants.EVENT_UPDATE_CHAT, onUpdateChat);
+        socket.on(Constants.EVENT_ON_DEFAULT_DN_CONNECT, onDNConnect);
 
         if(!socket.connected()){
             socket.connect();
@@ -98,8 +99,23 @@ public class RoomActivity extends AppCompatActivity implements RoomView, View.On
         socket.disconnect();
         socket.off(Socket.EVENT_CONNECT, onConnect);
         socket.off(Socket.EVENT_DISCONNECT, onDisconnect);
-        socket.off(Socket.EVENT_DISCONNECT, onUpdateChat);
+        socket.off(Constants.EVENT_UPDATE_CHAT, onUpdateChat);
+        socket.off(Constants.EVENT_ON_DEFAULT_DN_CONNECT, onDNConnect);
     }
+
+    private Emitter.Listener onDNConnect = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    String someHasConnectedMessage = (String) args[0];
+                    addNewMessageFromOtherUser("newUser", someHasConnectedMessage);
+                    socket.emit(Constants.EVENT_ON_MESSAGE_TO_DN_EMMITED, "My Name is " + mySharedPreference.getUser().getUserName());
+                }
+            });
+        }
+    };
 
     private Emitter.Listener onConnect = new Emitter.Listener(){
         @Override
@@ -108,11 +124,11 @@ public class RoomActivity extends AppCompatActivity implements RoomView, View.On
                 @Override
                 public void run() {
 
-                    if(!isUserConnected) {
+                    /*if(!isUserConnected) {
                         Log.e("x-ROOM OF USER ", "X-ROOM OF USER " + roomOfUser);
                         socket.emit("joinNewRoom", mySharedPreference.getUser().getUserName(), roomOfUser);
                         isUserConnected = true;
-                    }
+                    }*/
                 }
             });
         }
