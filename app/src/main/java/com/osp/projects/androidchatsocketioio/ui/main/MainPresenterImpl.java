@@ -1,40 +1,25 @@
 package com.osp.projects.androidchatsocketioio.ui.main;
 
-import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 
 import com.osp.projects.androidchatsocketioio.ui.login.LoginActivity;
-import com.osp.projects.androidchatsocketioio.ui.login.LoginInteractor;
-import com.osp.projects.androidchatsocketioio.ui.login.LoginPresenter;
-import com.osp.projects.androidchatsocketioio.ui.login.LoginView;
-
-import java.util.ArrayList;
 
 /**
  * Created by Carlos Leonardo Camilo Vargas Huamán on 6/04/17.
+ *
+ *
  */
 
-public class MainPresenterImpl implements MainPresenter{
-
-/*
-
-    private LoginView loginView;
-    private LoginInteractor loginInteractor;
-
-    MenuOptionAdapter menuOptionAdapter;
-    List<MenuOptionEntity> itemMenuOptionEntities = new ArrayList<>();
+public class MainPresenterImpl implements MainPresenter, MainInteractor.OnGetFriendsFinished{
 
 
-    RestaurantAdapter restaurantAdapter;
-    List<RestaurantEntity> restaurantEntities = new ArrayList<>();
+    private MainView mainView;
+    private MainInteractor mainInteractor;
 
-
-    LinearLayoutManager linearLayoutManager;
-
-
-    public MainPresenterImpl(LoginView mainView) {
+    public MainPresenterImpl(MainView mainView){
         this.mainView = mainView;
+        this.mainInteractor = new MainInteractorImpl();
     }
-*/
 
     @Override
     public void initialRestaurantData() {
@@ -53,6 +38,33 @@ public class MainPresenterImpl implements MainPresenter{
 
     @Override
     public void configRestaurantAdapter(LoginActivity mainActivity) {
+
+    }
+
+    @Override
+    public void serviceFriends(int userId) {
+        mainInteractor.serviceGetFriendsByUserId(userId, this);
+    }
+
+    @Override
+    public void onSuccessful() {
+
+        Log.e("SUCCESS","SUCCESS");
+
+
+    }
+
+    @Override
+    public void onError() {
+
+        Log.e("ERROR","ERROR");
+
+    }
+
+    @Override
+    public void onFailure() {
+
+        Log.e("FAILURE","FAILURE");
 
     }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.osp.projects.androidchatsocketioio.ui.rooms.RoomsActivity"
+    tools:context="com.osp.projects.androidchatsocketioio.ui.rooms.RoomActivity"
     tools:showIn="@layout/activity_rooms">
 
     <EditText

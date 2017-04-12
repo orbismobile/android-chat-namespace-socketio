@@ -1,47 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
-    android:background="?attr/selectableItemBackgroundBorderless">
+    android:background="?attr/selectableItemBackground">
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/imgUser"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_width="98dp"
+        android:layout_height="98dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_boy1"/>
+        android:src="@drawable/ic_boy1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/lblTitle"
+        android:layout_width="247dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center|start"
+        android:padding="5dp"
+        android:text="TITLE"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toRightOf="@+id/imgUser"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgUser" />
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/lblTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:textSize="18sp"
-            android:text="TITLE"/>
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/lblDescription"
+        android:layout_width="248dp"
+        android:layout_height="31dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="20dp"
+        android:elevation="19dp"
+        android:gravity="start"
+        android:padding="5dp"
+        android:text="description"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgUser"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="@+id/lblTitle"
+        app:layout_constraintRight_toRightOf="@+id/lblTitle"
+        app:layout_constraintTop_toBottomOf="@+id/lblTitle" />
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/lblDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:textSize="14sp"
-            android:text="description"/>
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/md_grey_400"/>
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

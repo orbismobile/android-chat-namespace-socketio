@@ -12,7 +12,6 @@ import android.widget.EditText;
 import com.osp.projects.androidchatsocketioio.R;
 import com.osp.projects.androidchatsocketioio.persistence.MySharedPreference;
 import com.osp.projects.androidchatsocketioio.ui.main.MainActivity;
-import com.osp.projects.androidchatsocketioio.ui.rooms.RoomsActivity;
 
 public class LoginActivity extends AppCompatActivity implements LoginView, View.OnClickListener{
 

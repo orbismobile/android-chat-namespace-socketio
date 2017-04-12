@@ -1,17 +1,16 @@
 package com.osp.projects.androidchatsocketioio.util.adapter;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.osp.projects.androidchatsocketioio.R;
 import com.osp.projects.androidchatsocketioio.model.entity.RoomEntity;
 import com.osp.projects.androidchatsocketioio.ui.main.MainActivity;
-import com.osp.projects.androidchatsocketioio.ui.rooms.RoomsActivity;
 
 import java.util.List;
 
@@ -20,12 +19,12 @@ import java.util.List;
  * Created by Carlos Vargas on 9/12/16.
  * CarlitosDroid
  */
-public class RoomsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<RoomEntity> roomsList;
     private MainActivity roomsActivity;
 
-    public RoomsAdapter(MainActivity roomsActivity, List<RoomEntity> roomsList) {
+    public RoomAdapter(MainActivity roomsActivity, List<RoomEntity> roomsList) {
         this.roomsList = roomsList;
         this.roomsActivity = roomsActivity;
     }
@@ -53,13 +52,13 @@ public class RoomsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         AppCompatTextView lblTitle;
         AppCompatTextView lblDescription;
-        LinearLayout container;
+        ConstraintLayout container;
         AppCompatImageView imgUser;
 
         public RoomItemViewHolder(View itemView) {
             super(itemView);
             imgUser = (AppCompatImageView) itemView.findViewById(R.id.imgUser);
-            container = (LinearLayout) itemView.findViewById(R.id.container);
+            container = (ConstraintLayout) itemView.findViewById(R.id.container);
             lblTitle = (AppCompatTextView) itemView.findViewById(R.id.lblTitle);
             lblDescription = (AppCompatTextView) itemView.findViewById(R.id.lblDescription);
 
