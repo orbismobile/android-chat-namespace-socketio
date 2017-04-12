@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imgFriend"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_boy1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/lblFriendName"
+        android:layout_width="153dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="52dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center|start"
+        android:text="UserName"
+        android:textColor="@color/md_teal_700"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgFriend"
+        app:layout_constraintHorizontal_bias="0.794"
+        app:layout_constraintLeft_toRightOf="@+id/imgFriend"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgFriend"
+        app:layout_constraintVertical_bias="0.625" />
+</android.support.constraint.ConstraintLayout>

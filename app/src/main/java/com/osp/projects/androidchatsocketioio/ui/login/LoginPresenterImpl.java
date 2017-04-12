@@ -1,6 +1,7 @@
 package com.osp.projects.androidchatsocketioio.ui.login;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.osp.projects.androidchatsocketioio.model.entity.UserEntity;
 import com.osp.projects.androidchatsocketioio.model.request.PostUserRequest;
@@ -23,6 +24,8 @@ public class LoginPresenterImpl implements LoginPresenter, LoginInteractor.OnLog
         this.loginView = loginView;
         this.loginInteractor = new LoginInteractorImpl();
         this.mySharedPreference = mySharedPreference;
+        Log.e("MALO2 ","MALO " + mySharedPreference.getUser().getUserName());
+        Log.e("MALO2 ","MALO " + mySharedPreference.getUser().getUserId());
     }
 
 

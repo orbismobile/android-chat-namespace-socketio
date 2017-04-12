@@ -60,8 +60,9 @@ public class LoginInteractorImpl implements LoginInteractor {
                     GetUserByNicknameResponse getUserByNicknameResponse  = response.body();
 
                     UserEntity userEntity = new UserEntity();
-                    userEntity.setUserId(getUserByNicknameResponse.getData().get(0).getId_user());
-                    userEntity.setUserName(getUserByNicknameResponse.getData().get(0).getUser_name());
+                    userEntity.setUserId(getUserByNicknameResponse.getData().get(0).getUserId());
+                    userEntity.setUserName(getUserByNicknameResponse.getData().get(0).getUserName());
+
                     listener.onSuccessfulGetUser(userEntity);
 
                 } else {

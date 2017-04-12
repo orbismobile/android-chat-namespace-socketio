@@ -3,15 +3,15 @@ package com.osp.projects.androidchatsocketioio.model.response;
 import java.util.List;
 
 /**
- * Created by Carlos Leonardo Camilo Vargas Huamán on 4/9/17.
+ * Created by Carlos Leonardo Camilo Vargas Huamán on 4/11/17.
  */
 
-public class GetUserByNicknameResponse {
+public class GetGlobalFriendsResponse {
 
     /**
      * status : SUCCESS
-     * message : User was found
-     * data : [{"userId":11,"userName":"seno"}]
+     * message : Users were found
+     * data : [{"userId":2,"userName":"ronaldo"},{"userId":3,"userName":"carlo"},{"userId":4,"userName":"ricardo"}]
      */
 
     private String status;
@@ -44,8 +44,8 @@ public class GetUserByNicknameResponse {
 
     public static class DataBean {
         /**
-         * userId : 11
-         * userName : seno
+         * userId : 2
+         * userName : ronaldo
          */
 
         private int userId;

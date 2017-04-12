@@ -95,7 +95,7 @@
     <color name="md_blue_400">#42A5F5</color>
     <color name="md_blue_500">#2196F3</color>
     <color name="md_blue_600">#1E88E5</color>
-    <color name="md_blue_700">#1976D2</color>
+    <color name="md_blue_700">#1976d2</color>
     <color name="md_blue_800">#1565C0</color>
     <color name="md_blue_900">#0D47A1</color>
     <color name="md_blue_A100">#82B1FF</color>
@@ -143,7 +143,7 @@
     <color name="md_teal_400">#26A69A</color>
     <color name="md_teal_500">#009688</color>
     <color name="md_teal_600">#00897B</color>
-    <color name="md_teal_700">#00796B</color>
+    <color name="md_teal_700">#00796b</color>
     <color name="md_teal_800">#00695C</color>
     <color name="md_teal_900">#004D40</color>
     <color name="md_teal_A100">#A7FFEB</color>

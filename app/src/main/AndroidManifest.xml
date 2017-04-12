@@ -29,6 +29,10 @@
         <activity
             android:name=".ui.rooms.RoomActivity"
             android:label="@string/title_activity_rooms"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.globalfriend.GlobalFriendsActivity"
+            android:label="@string/title_activity_global_friends"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
