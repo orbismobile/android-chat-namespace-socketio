@@ -107,6 +107,7 @@ public class RoomActivity extends AppCompatActivity implements RoomView, View.On
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+
                     if(!isUserConnected) {
                         Log.e("x-ROOM OF USER ", "X-ROOM OF USER " + roomOfUser);
                         socket.emit("joinNewRoom", mySharedPreference.getUser().getUserName(), roomOfUser);

@@ -8,4 +8,5 @@
     <string name="message_other_user"> %1$s : %2$s</string>
     <string name="message_type_action"> %1$s : está escribiendo&#8230;</string>
     <string name="title_activity_choose_room">ChooseRoomActivity</string>
+    <string name="title_activity_global_friends">GlobalFriendsActivity</string>
 </resources>

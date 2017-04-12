@@ -1,11 +1,14 @@
 package com.osp.projects.androidchatsocketioio.util.api;
 
+import com.osp.projects.androidchatsocketioio.model.request.PostFriendRequest;
 import com.osp.projects.androidchatsocketioio.model.request.PostUserRequest;
 import com.osp.projects.androidchatsocketioio.model.request.RegisterRequest;
 import com.osp.projects.androidchatsocketioio.model.response.FriendsResponse;
 import com.osp.projects.androidchatsocketioio.model.response.GetFriendsByUserIdResponse;
+import com.osp.projects.androidchatsocketioio.model.response.GetGlobalFriendsResponse;
 import com.osp.projects.androidchatsocketioio.model.response.GetUserByNicknameResponse;
 import com.osp.projects.androidchatsocketioio.model.response.GetUserResponse;
+import com.osp.projects.androidchatsocketioio.model.response.PostFriendResponse;
 import com.osp.projects.androidchatsocketioio.model.response.PostUserResponse;
 import com.osp.projects.androidchatsocketioio.model.response.RegisterResponse;
 import com.osp.projects.androidchatsocketioio.model.response.RoomsResponse;
@@ -33,18 +36,12 @@ public interface ChatDemoApi {
     @POST(EndPointConstant.POST_USER)
     Call<PostUserResponse> postUser(@Body PostUserRequest postUserRequest);
 
+    @GET(EndPointConstant.GET_GLOBAL_FRIENDS)
+    Call<GetGlobalFriendsResponse> getGlobalFriends(@Path("userId") int id);
 
 
-    @GET(EndPointConstant.URL_FRIENDS)
-    Call<FriendsResponse> friendsGet(@Path("user_id") int id);
-
-
-    @GET(EndPointConstant.URL_ROOMS)
-    Call<RoomsResponse> roomsGet(@Path("user_id") int id);
-
-
-    @POST(EndPointConstant.URL_REGISTER)
-    Call<RegisterResponse> registerPost(@Body RegisterRequest registerRequest);
+    @POST(EndPointConstant.POST_FRIEND)
+    Call<PostFriendResponse> postFriend(@Body PostFriendRequest postFriendRequest);
 
 
 

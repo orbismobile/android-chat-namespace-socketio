@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,8 @@ import com.osp.projects.androidchatsocketioio.R;
 import com.osp.projects.androidchatsocketioio.model.entity.RoomEntity;
 import com.osp.projects.androidchatsocketioio.persistence.MySharedPreference;
 import com.osp.projects.androidchatsocketioio.ui.fragment.adduser.AddUserDialogFragment;
+import com.osp.projects.androidchatsocketioio.ui.fragment.adduser.AddUserInteractor;
+import com.osp.projects.androidchatsocketioio.ui.globalfriend.GlobalFriendsActivity;
 import com.osp.projects.androidchatsocketioio.ui.rooms.RoomActivity;
 import com.osp.projects.androidchatsocketioio.ui.rooms.RoomPresenter;
 import com.osp.projects.androidchatsocketioio.util.Constants;
@@ -27,7 +30,7 @@ import java.util.List;
 
 import static com.osp.projects.androidchatsocketioio.R.id.fab;
 
-public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener, AddUserInteractor.OnAddUserFinished{
 
     private Boolean isUserConnected = false;
 
@@ -40,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     private MySharedPreference mySharedPreference;
 
     private FloatingActionButton fabAddUser;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,11 +116,27 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.fabAddUser:
-                FragmentManager fm = this.getSupportFragmentManager();
-                AddUserDialogFragment addUserDialogFragment =
-                        AddUserDialogFragment.newInstance("test","test");
-                addUserDialogFragment.show(fm, "carlitois");
+                startActivity(new Intent(this, GlobalFriendsActivity.class));
+//                FragmentManager fm = this.getSupportFragmentManager();
+//                AddUserDialogFragment addUserDialogFragment =
+//                        AddUserDialogFragment.newInstance("test","test");
+//                addUserDialogFragment.show(fm, "carlitois");
                 break;
         }
+    }
+
+    @Override
+    public void onSuccessful() {
+        Log.e("ONSUCCESSFUL","ONSUCCESSFUL");
+    }
+
+    @Override
+    public void onError() {
+
+    }
+
+    @Override
+    public void onFailure() {
+
     }
 }

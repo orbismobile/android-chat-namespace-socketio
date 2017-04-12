@@ -7,5 +7,5 @@ package com.osp.projects.androidchatsocketioio.ui.fragment.adduser;
 
 public interface AddUserPresenter {
 
-    void serviceAddUser();
+    void validateAddUser(int friendId, int userId);
 }

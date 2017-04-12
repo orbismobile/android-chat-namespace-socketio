@@ -1,6 +1,13 @@
 package com.osp.projects.androidchatsocketioio.ui.fragment.adduser;
 
-import com.osp.projects.androidchatsocketioio.ui.main.MainInteractor;
+import com.osp.projects.androidchatsocketioio.model.request.PostFriendRequest;
+import com.osp.projects.androidchatsocketioio.model.response.GetFriendsByUserIdResponse;
+import com.osp.projects.androidchatsocketioio.model.response.PostFriendResponse;
+import com.osp.projects.androidchatsocketioio.util.api.ChatDemoApiManager;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Carlos Leonardo Camilo Vargas Huamán on 11/04/17.
@@ -10,36 +17,22 @@ import com.osp.projects.androidchatsocketioio.ui.main.MainInteractor;
 public class AddUserInteractorImpl implements AddUserInteractor {
 
     @Override
-    public void serviceGetFriendsByUserId(final MainInteractor.OnGetFriendsFinished ){
-
-    }
-
-
-    @Override
-    public void serviceGetUser(final OnLoginFinished listener) {
-        Call<GetUserResponse> call = ChatDemoApiManager.apiManager().getUser();
-        call.enqueue(new Callback<GetUserResponse>() {
+    public void serviceAddUser(PostFriendRequest postFriendRequest, final OnAddUserFinished listener) {
+        Call<PostFriendResponse> call = ChatDemoApiManager.apiManager().postFriend(postFriendRequest);
+        call.enqueue(new Callback<PostFriendResponse>() {
             @Override
-            public void onResponse(Call<GetUserResponse> call, Response<GetUserResponse> response) {
+            public void onResponse(Call<PostFriendResponse> call, Response<PostFriendResponse> response) {
                 if (response.isSuccessful()) {
-                    GetUserResponse getUserResponse  = response.body();
-
-                    UserEntity userEntity = new UserEntity();
-                    userEntity.setUserId(getUserResponse.getData().get(0).getId_user());
-                    userEntity.setUserName(getUserResponse.getData().get(0).getUser_name());
-                    listener.onSuccessfulGetUser(userEntity);
-
+                    listener.onSuccessful();
                 } else {
                     listener.onError();
                 }
             }
 
             @Override
-            public void onFailure(Call<GetUserResponse> call, Throwable t) {
+            public void onFailure(Call<PostFriendResponse> call, Throwable t) {
                 listener.onFailure();
             }
         });
     }
-
-
 }
