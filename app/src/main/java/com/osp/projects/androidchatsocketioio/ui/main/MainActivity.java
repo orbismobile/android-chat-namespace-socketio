@@ -16,8 +16,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.osp.projects.androidchatsocketioio.R;
+import com.osp.projects.androidchatsocketioio.model.entity.RoomEntity;
+import com.osp.projects.androidchatsocketioio.model.response.GetFriendsByUserIdResponse;
 import com.osp.projects.androidchatsocketioio.persistence.MySharedPreference;
 import com.osp.projects.androidchatsocketioio.ui.globalfriend.GlobalFriendsActivity;
+import com.osp.projects.androidchatsocketioio.ui.rooms.RoomActivity;
+import com.osp.projects.androidchatsocketioio.util.Constants;
 import com.osp.projects.androidchatsocketioio.util.adapter.RoomAdapter;
 
 
@@ -86,9 +90,10 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
     @Override
     public void navigateToMain(int itemPosition) {
-        /*Intent intent = new Intent(this, RoomActivity.class);
-        intent.putExtra(Constants.ROOM_ENTITY, roomsList.get(itemPosition));
-        startActivity(intent);*/
+        Intent intent = new Intent(this, RoomActivity.class);
+        GetFriendsByUserIdResponse.DataBean dataBean = mainPresenter.getListFriends().get(itemPosition);
+        intent.putExtra(Constants.ROOM_ENTITY,  new RoomEntity(dataBean.getFriendId()+"ROOM", dataBean.getUserName(), "salutee" , "2012-01-20", R.drawable.ic_boy1));
+        startActivity(intent);
     }
 
     @Override

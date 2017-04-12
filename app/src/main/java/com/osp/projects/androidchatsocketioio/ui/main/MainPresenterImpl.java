@@ -57,19 +57,29 @@ public class MainPresenterImpl implements MainPresenter, MainInteractor.OnGetFri
     }
 
     @Override
+    public List<GetFriendsByUserIdResponse.DataBean> getListFriends() {
+        return friendsBeanList;
+
+    }
+
+    @Override
     public void serviceFriends(int userId) {
         mainInteractor.serviceGetFriendsByUserId(userId, this);
     }
 
     @Override
     public void onSuccessful(List<GetFriendsByUserIdResponse.DataBean> friendsBeanList) {
-        this.friendsBeanList.addAll(friendsBeanList);
-        mainView.hideSwipeRefresh();
+        if(friendsBeanList != null){
+            this.friendsBeanList.clear();
+            this.friendsBeanList.addAll(friendsBeanList);
+            roomAdapter.notifyDataSetChanged();
+            mainView.hideSwipeRefresh();
+        }
     }
 
     @Override
     public void onError() {
-
+        mainView.hideSwipeRefresh();
         Log.e("ERROR","ERROR");
 
     }

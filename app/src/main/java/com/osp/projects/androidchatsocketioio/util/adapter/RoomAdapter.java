@@ -71,7 +71,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public void onClick(View view) {
             switch (view.getId()){
                 case R.id.container:
-                    //roomsActivity.navigateToMain(getAdapterPosition());
+                    mainView.navigateToMain(getAdapterPosition());
                     break;
             }
         }
