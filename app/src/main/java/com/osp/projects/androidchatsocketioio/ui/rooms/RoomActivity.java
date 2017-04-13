@@ -30,7 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomActivity extends AppCompatActivity implements RoomView, View.OnClickListener {
-    /**RCV**/
+    /**
+     * RCV
+     **/
     private RecyclerView rcvMessage;
     private MessageAdapter messageAdapter;
     private LinearLayoutManager linearLayoutManager;
@@ -71,7 +73,7 @@ public class RoomActivity extends AppCompatActivity implements RoomView, View.On
         mySharedPreference = new MySharedPreference(this);
 
         bundle = getIntent().getExtras();
-        if(bundle!=null){
+        if (bundle != null) {
             roomEntity = (RoomEntity) bundle.getSerializable(Constants.ROOM_ENTITY);
         }
 
@@ -82,14 +84,14 @@ public class RoomActivity extends AppCompatActivity implements RoomView, View.On
 
         socket.on(Socket.EVENT_CONNECT, onConnect);
         socket.on(Socket.EVENT_DISCONNECT, onDisconnect);
-        socket.on(Constants.EVENT_UPDATE_CHAT, onUpdateChat);
+        //socket.on(Constants.EVENT_UPDATE_CHAT, onUpdateChat);
         socket.on(Constants.EVENT_ON_DEFAULT_DN_CONNECT, onDNConnect);
 
-        if(!socket.connected()){
+        if (!socket.connected()) {
             socket.connect();
         }
 
-        assert imgBtnSend!=null;
+        assert imgBtnSend != null;
         imgBtnSend.setOnClickListener(this);
     }
 
@@ -99,42 +101,43 @@ public class RoomActivity extends AppCompatActivity implements RoomView, View.On
         socket.disconnect();
         socket.off(Socket.EVENT_CONNECT, onConnect);
         socket.off(Socket.EVENT_DISCONNECT, onDisconnect);
-        socket.off(Constants.EVENT_UPDATE_CHAT, onUpdateChat);
+        //socket.off(Constants.EVENT_UPDATE_CHAT, onUpdateChat);
         socket.off(Constants.EVENT_ON_DEFAULT_DN_CONNECT, onDNConnect);
     }
 
+    /**
+     * @onConnect initial listener executed by default after connection with DN
+     */
+    private Emitter.Listener onConnect = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.e("onConnect", "successful");
+                }
+            });
+        }
+    };
+
+    /**
+     * @onDNConnect custom listener executed when the default namespace (socket.io)
+     * on the server side emits the 'onDNConnect' event (socket.io.emits...)
+     */
     private Emitter.Listener onDNConnect = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    String someHasConnectedMessage = (String) args[0];
-                    addNewMessageFromOtherUser("newUser", someHasConnectedMessage);
-                    socket.emit(Constants.EVENT_ON_MESSAGE_TO_DN_EMMITED, "My Name is " + mySharedPreference.getUser().getUserName());
+                    String message = (String) args[0];
+                    addNewMessageFromOtherUser("", message);
                 }
             });
         }
     };
 
-    private Emitter.Listener onConnect = new Emitter.Listener(){
-        @Override
-        public void call(Object... args) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-
-                    /*if(!isUserConnected) {
-                        Log.e("x-ROOM OF USER ", "X-ROOM OF USER " + roomOfUser);
-                        socket.emit("joinNewRoom", mySharedPreference.getUser().getUserName(), roomOfUser);
-                        isUserConnected = true;
-                    }*/
-                }
-            });
-        }
-    };
-
-    private Emitter.Listener onUpdateChat = new Emitter.Listener(){
+    private Emitter.Listener onUpdateChat = new Emitter.Listener() {
 
         @Override
         public void call(final Object... args) {
@@ -151,8 +154,8 @@ public class RoomActivity extends AppCompatActivity implements RoomView, View.On
                         e.printStackTrace();
                     }
 
-                    Log.e("x-userName ","userName "+username);
-                    Log.e("x-message ","message "+message);
+                    Log.e("x-userName ", "userName " + username);
+                    Log.e("x-message ", "message " + message);
 
 
                     //removeTyping(username);
@@ -162,13 +165,13 @@ public class RoomActivity extends AppCompatActivity implements RoomView, View.On
         }
     };
 
-    private void addNewMessageFromOtherUser(String username, String message){
+    private void addNewMessageFromOtherUser(String username, String message) {
         objectList.add(new MessageOtherUserEntity(username, message));
         messageAdapter.notifyItemInserted(objectList.size() - 1);
         scrollToBottom();
     }
 
-    private Emitter.Listener onDisconnect = new Emitter.Listener(){
+    private Emitter.Listener onDisconnect = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             runOnUiThread(new Runnable() {
@@ -183,7 +186,7 @@ public class RoomActivity extends AppCompatActivity implements RoomView, View.On
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.imgBtnSend:
                 attemptSend();
                 break;
@@ -191,31 +194,39 @@ public class RoomActivity extends AppCompatActivity implements RoomView, View.On
 
     }
 
-    private void attemptSend(){
+    private void attemptSend() {
+        switch (roomOfUser) {
+            case "0ROOM":
+                socket.emit(Constants.EVENT_ON_MESSAGE_TO_DN_EMMITED,
+                        mySharedPreference.getUser().getUserName(),
+                        txtMessage.getText().toString().trim());
+                break;
+            default:
+                //if(MySharedPreference.getUser(this).getUserName() == null)return;
+                if (!socket.connected()) return;
 
-        //if(MySharedPreference.getUser(this).getUserName() == null)return;
-        if(!socket.connected()) return;
+                String message = txtMessage.getText().toString().trim();
+                Log.e("X-MESSAGE ", "MESSAGE " + message);
+                if (TextUtils.isEmpty(message)) {
+                    txtMessage.requestFocus();
+                    return;
+                }
 
-        String message = txtMessage.getText().toString().trim();
-        Log.e("X-MESSAGE ","MESSAGE "+message);
-        if(TextUtils.isEmpty(message)){
-            txtMessage.requestFocus();
-            return;
+                txtMessage.setText("");
+                addNewMessageFromMyUser(mySharedPreference.getUser().getUserName(), message);
+
+                socket.emit("newMessage", message);
+                break;
         }
-
-        txtMessage.setText("");
-        addNewMessageFromMyUser(mySharedPreference.getUser().getUserName(), message);
-
-        socket.emit("newMessage", message);
     }
 
-    private void addNewMessageFromMyUser(String username, String message){
+    private void addNewMessageFromMyUser(String username, String message) {
         objectList.add(new MessageMyUserEntity(username, message));
         messageAdapter.notifyItemInserted(objectList.size() - 1);
         scrollToBottom();
     }
 
-    private void scrollToBottom(){
+    private void scrollToBottom() {
         rcvMessage.scrollToPosition(messageAdapter.getItemCount() - 1);
     }
 }

@@ -7,8 +7,8 @@ package com.osp.projects.androidchatsocketioio.util;
 
 public class EndPointConstant {
 
-    public static final String BASE_URL = "http://192.168.2.1:8123/";
-    //public static final String BASE_URL = "http://192.168.1.35:8123/";
+    //public static final String BASE_URL = "http://192.168.2.1:8123/";
+    public static final String BASE_URL = "http://192.168.1.35:8123/";
 
 
     public static final String GET_USER = "user";
