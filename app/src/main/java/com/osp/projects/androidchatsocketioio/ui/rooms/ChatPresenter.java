@@ -5,6 +5,6 @@ package com.osp.projects.androidchatsocketioio.ui.rooms;
  *
  */
 
-public interface RoomView {
+public interface ChatPresenter {
 
 }

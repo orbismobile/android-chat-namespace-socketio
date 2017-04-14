@@ -8,13 +8,10 @@ import android.support.v7.widget.Toolbar;
 
 
 import com.osp.projects.androidchatsocketioio.R;
-import com.osp.projects.androidchatsocketioio.model.entity.FriendEntity;
-import com.osp.projects.androidchatsocketioio.model.entity.RoomEntity;
 import com.osp.projects.androidchatsocketioio.model.request.PostFriendRequest;
 import com.osp.projects.androidchatsocketioio.model.response.GetGlobalFriendsResponse;
 import com.osp.projects.androidchatsocketioio.model.response.PostFriendResponse;
 import com.osp.projects.androidchatsocketioio.persistence.MySharedPreference;
-import com.osp.projects.androidchatsocketioio.util.adapter.RoomAdapter;
 import com.osp.projects.androidchatsocketioio.util.api.ChatDemoApiManager;
 
 import java.util.ArrayList;

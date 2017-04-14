@@ -9,9 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.osp.projects.androidchatsocketioio.R;
-import com.osp.projects.androidchatsocketioio.model.entity.RoomEntity;
 import com.osp.projects.androidchatsocketioio.model.response.GetFriendsByUserIdResponse;
-import com.osp.projects.androidchatsocketioio.ui.main.MainActivity;
 import com.osp.projects.androidchatsocketioio.ui.main.MainView;
 
 import java.util.List;

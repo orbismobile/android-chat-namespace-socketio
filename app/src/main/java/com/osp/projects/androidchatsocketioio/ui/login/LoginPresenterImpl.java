@@ -24,8 +24,6 @@ public class LoginPresenterImpl implements LoginPresenter, LoginInteractor.OnLog
         this.loginView = loginView;
         this.loginInteractor = new LoginInteractorImpl();
         this.mySharedPreference = mySharedPreference;
-        Log.e("MALO2 ","MALO " + mySharedPreference.getUser().getUserName());
-        Log.e("MALO2 ","MALO " + mySharedPreference.getUser().getUserId());
     }
 
 

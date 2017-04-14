@@ -1,5 +1,6 @@
 package com.osp.projects.androidchatsocketioio.model.response;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,11 +12,13 @@ public class GetFriendsByUserIdResponse {
 
     /**
      * status : SUCCESS
+     * statusCode : 200
      * message : Friend were found
-     * data : [{"friendId":1,"userName":"carlos"},{"friendId":3,"userName":"carlo"},{"friendId":4,"userName":"ricardo"}]
+     * data : [{"friendId":0,"userName":"DefaultNamespace"},{"linkId":1,"friendId":2,"userName":"ronaldo"},{"linkId":2,"friendId":3,"userName":"carlo"},{"linkId":6,"friendId":4,"userName":"ricardo"}]
      */
 
     private String status;
+    private int statusCode;
     private String message;
     private List<DataBean> data;
 
@@ -25,6 +28,14 @@ public class GetFriendsByUserIdResponse {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
     }
 
     public String getMessage() {
@@ -43,14 +54,16 @@ public class GetFriendsByUserIdResponse {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
-         * friendId : 1
-         * userName : carlos
+         * friendId : 0
+         * userName : DefaultNamespace
+         * linkId : 1
          */
 
         private int friendId;
         private String userName;
+        private int linkId;
 
         public int getFriendId() {
             return friendId;
@@ -66,6 +79,14 @@ public class GetFriendsByUserIdResponse {
 
         public void setUserName(String userName) {
             this.userName = userName;
+        }
+
+        public int getLinkId() {
+            return linkId;
+        }
+
+        public void setLinkId(int linkId) {
+            this.linkId = linkId;
         }
     }
 }

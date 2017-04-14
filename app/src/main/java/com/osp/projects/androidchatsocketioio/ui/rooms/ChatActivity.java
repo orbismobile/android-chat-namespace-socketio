@@ -18,7 +18,7 @@ import com.osp.projects.androidchatsocketioio.R;
 import com.osp.projects.androidchatsocketioio.app.ChatDemoApplication;
 import com.osp.projects.androidchatsocketioio.model.entity.MessageMyUserEntity;
 import com.osp.projects.androidchatsocketioio.model.entity.MessageOtherUserEntity;
-import com.osp.projects.androidchatsocketioio.model.entity.RoomEntity;
+import com.osp.projects.androidchatsocketioio.model.response.GetFriendsByUserIdResponse;
 import com.osp.projects.androidchatsocketioio.persistence.MySharedPreference;
 import com.osp.projects.androidchatsocketioio.util.Constants;
 import com.osp.projects.androidchatsocketioio.util.adapter.MessageAdapter;
@@ -29,7 +29,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoomActivity extends AppCompatActivity implements RoomView, View.OnClickListener {
+public class ChatActivity extends AppCompatActivity implements ChatView, View.OnClickListener {
     /**
      * RCV
      **/
@@ -40,15 +40,12 @@ public class RoomActivity extends AppCompatActivity implements RoomView, View.On
 
     private ImageButton imgBtnSend;
     private EditText txtMessage;
-
-    private Bundle bundle;
-    private RoomEntity roomEntity;
+    private GetFriendsByUserIdResponse.DataBean dataBean;
 
 
     private Boolean isUserConnected = false;
 
     private Socket socket;
-    private String roomOfUser;
 
     private MySharedPreference mySharedPreference;
 
@@ -72,19 +69,14 @@ public class RoomActivity extends AppCompatActivity implements RoomView, View.On
 
         mySharedPreference = new MySharedPreference(this);
 
-        bundle = getIntent().getExtras();
-        if (bundle != null) {
-            roomEntity = (RoomEntity) bundle.getSerializable(Constants.ROOM_ENTITY);
-        }
-
-        roomOfUser = roomEntity.getName();
+        dataBean = (GetFriendsByUserIdResponse.DataBean) getIntent().getSerializableExtra(Constants.ROOM_ENTITY);
 
         ChatDemoApplication chatApplication = (ChatDemoApplication) getApplication();
         socket = chatApplication.getSocket();
 
         socket.on(Socket.EVENT_CONNECT, onConnect);
         socket.on(Socket.EVENT_DISCONNECT, onDisconnect);
-        //socket.on(Constants.EVENT_UPDATE_CHAT, onUpdateChat);
+        socket.on(Constants.EVENT_UPDATE_CHAT, onUpdateChat);
         socket.on(Constants.EVENT_ON_DEFAULT_DN_CONNECT, onDNConnect);
 
         if (!socket.connected()) {
@@ -101,7 +93,7 @@ public class RoomActivity extends AppCompatActivity implements RoomView, View.On
         socket.disconnect();
         socket.off(Socket.EVENT_CONNECT, onConnect);
         socket.off(Socket.EVENT_DISCONNECT, onDisconnect);
-        //socket.off(Constants.EVENT_UPDATE_CHAT, onUpdateChat);
+        socket.off(Constants.EVENT_UPDATE_CHAT, onUpdateChat);
         socket.off(Constants.EVENT_ON_DEFAULT_DN_CONNECT, onDNConnect);
     }
 
@@ -114,7 +106,18 @@ public class RoomActivity extends AppCompatActivity implements RoomView, View.On
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.e("onConnect", "successful");
+                    if (!isUserConnected) {
+                        switch (dataBean.getLinkId()) {
+                            case 0:
+                                Log.e("x-USER CONNECTED", "X-USER CONNECTED ");
+                                break;
+                            default:
+                                Log.e("x-ROOM OF USER ", "X-ROOM OF USER " + dataBean.getLinkId());
+                                socket.emit("joinNewRoom", mySharedPreference.getUser().getUserName(), dataBean.getLinkId());
+                                break;
+                        }
+                        isUserConnected = true;
+                    }
                 }
             });
         }
@@ -178,7 +181,7 @@ public class RoomActivity extends AppCompatActivity implements RoomView, View.On
                 @Override
                 public void run() {
                     isUserConnected = false;
-                    Toast.makeText(RoomActivity.this, "You're disconnected", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChatActivity.this, "You're disconnected", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -195,27 +198,24 @@ public class RoomActivity extends AppCompatActivity implements RoomView, View.On
     }
 
     private void attemptSend() {
-        switch (roomOfUser) {
-            case "0ROOM":
+        if (!socket.connected()) return;
+
+        String message = txtMessage.getText().toString().trim();
+        if (TextUtils.isEmpty(message)) {
+            txtMessage.requestFocus();
+            return;
+        }
+        txtMessage.setText("");
+        switch (dataBean.getLinkId()) {
+            case 0:
                 socket.emit(Constants.EVENT_ON_MESSAGE_TO_DN_EMMITED,
                         mySharedPreference.getUser().getUserName(),
-                        txtMessage.getText().toString().trim());
+                        message);
                 break;
             default:
-                //if(MySharedPreference.getUser(this).getUserName() == null)return;
-                if (!socket.connected()) return;
-
-                String message = txtMessage.getText().toString().trim();
-                Log.e("X-MESSAGE ", "MESSAGE " + message);
-                if (TextUtils.isEmpty(message)) {
-                    txtMessage.requestFocus();
-                    return;
-                }
-
-                txtMessage.setText("");
+                socket.emit("newMessage", mySharedPreference.getUser().getUserName(), message);
                 addNewMessageFromMyUser(mySharedPreference.getUser().getUserName(), message);
-
-                socket.emit("newMessage", message);
+                socket.emit("newMessage", mySharedPreference.getUser().getUserName(), message);
                 break;
         }
     }

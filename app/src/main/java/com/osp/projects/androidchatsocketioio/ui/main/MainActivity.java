@@ -3,24 +3,20 @@ package com.osp.projects.androidchatsocketioio.ui.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.osp.projects.androidchatsocketioio.R;
-import com.osp.projects.androidchatsocketioio.model.entity.RoomEntity;
 import com.osp.projects.androidchatsocketioio.model.response.GetFriendsByUserIdResponse;
 import com.osp.projects.androidchatsocketioio.persistence.MySharedPreference;
 import com.osp.projects.androidchatsocketioio.ui.globalfriend.GlobalFriendsActivity;
-import com.osp.projects.androidchatsocketioio.ui.rooms.RoomActivity;
+import com.osp.projects.androidchatsocketioio.ui.rooms.ChatActivity;
 import com.osp.projects.androidchatsocketioio.util.Constants;
 import com.osp.projects.androidchatsocketioio.util.adapter.RoomAdapter;
 
@@ -46,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         setSupportActionBar(toolbar);
         fabAddUser = (FloatingActionButton) findViewById(R.id.fabAddUser);
 
-
         rcvRooms = (RecyclerView) findViewById(R.id.rcvRooms);
         swpRefresh = (SwipeRefreshLayout) findViewById(R.id.swpRefresh);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -58,10 +53,9 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
         mainPresenter = new MainPresenterImpl(this);
         mainPresenter.configRecyclerView();
-        //mainPresenter.serviceFriends(mySharedPreference.getUser().getUserId());
+        mainPresenter.serviceFriends(mySharedPreference.getUser().getUserId());
 
         fabAddUser.setOnClickListener(this);
-
     }
 
     @Override
@@ -88,9 +82,9 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
     @Override
     public void navigateToMain(int itemPosition) {
-        Intent intent = new Intent(this, RoomActivity.class);
+        Intent intent = new Intent(this, ChatActivity.class);
         GetFriendsByUserIdResponse.DataBean dataBean = mainPresenter.getListFriends().get(itemPosition);
-        intent.putExtra(Constants.ROOM_ENTITY,  new RoomEntity(dataBean.getFriendId()+"ROOM", dataBean.getUserName(), "salutee" , "2012-01-20", R.drawable.ic_boy1));
+        intent.putExtra(Constants.ROOM_ENTITY,  dataBean);
         startActivity(intent);
     }
 

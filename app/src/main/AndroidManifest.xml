@@ -24,11 +24,11 @@
         </activity>
         <activity
             android:name=".ui.main.MainActivity"
-            android:label="@string/title_activity_login"
+            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.rooms.RoomActivity"
-            android:label="@string/title_activity_rooms"
+            android:name=".ui.rooms.ChatActivity"
+            android:label="@string/title_activity_chat"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.globalfriend.GlobalFriendsActivity"

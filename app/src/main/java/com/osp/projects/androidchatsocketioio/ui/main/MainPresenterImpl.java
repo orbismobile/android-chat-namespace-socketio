@@ -18,22 +18,15 @@ import java.util.List;
 
 public class MainPresenterImpl implements MainPresenter, MainInteractor.OnGetFriendsFinished{
 
-
     private MainView mainView;
     private MainInteractor mainInteractor;
     private List<GetFriendsByUserIdResponse.DataBean> friendsBeanList = new ArrayList<>();
 
     private RoomAdapter roomAdapter;
 
-    GetFriendsByUserIdResponse.DataBean dataBean = new GetFriendsByUserIdResponse.DataBean();
-
     public MainPresenterImpl(MainView mainView){
         this.mainView = mainView;
         this.mainInteractor = new MainInteractorImpl();
-        dataBean.setFriendId(0);
-        dataBean.setUserName("general");
-        dataBean = new GetFriendsByUserIdResponse.DataBean();
-        friendsBeanList.add(dataBean);
         roomAdapter = new RoomAdapter(mainView, friendsBeanList);
     }
 
@@ -87,13 +80,10 @@ public class MainPresenterImpl implements MainPresenter, MainInteractor.OnGetFri
     public void onError() {
         mainView.hideSwipeRefresh();
         Log.e("ERROR","ERROR");
-
     }
 
     @Override
     public void onFailure() {
-
         Log.e("FAILURE","FAILURE");
-
     }
 }
