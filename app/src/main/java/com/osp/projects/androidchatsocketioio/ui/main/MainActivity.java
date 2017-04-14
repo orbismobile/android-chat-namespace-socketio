@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         mainPresenter.serviceFriends(mySharedPreference.getUser().getUserId());
 
         fabAddUser.setOnClickListener(this);
+
+        toolbar.setTitle(mySharedPreference.getUser().getUserName());
     }
 
     @Override

@@ -113,7 +113,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, View.On
                                 break;
                             default:
                                 Log.e("x-ROOM OF USER ", "X-ROOM OF USER " + dataBean.getLinkId());
-                                socket.emit("joinNewRoom", mySharedPreference.getUser().getUserName(), dataBean.getLinkId());
+                                socket.emit("joinOwnRoom", mySharedPreference.getUser().getUserId(), dataBean.getFriendId());
                                 break;
                         }
                         isUserConnected = true;
@@ -213,9 +213,8 @@ public class ChatActivity extends AppCompatActivity implements ChatView, View.On
                         message);
                 break;
             default:
-                socket.emit("newMessage", mySharedPreference.getUser().getUserName(), message);
                 addNewMessageFromMyUser(mySharedPreference.getUser().getUserName(), message);
-                socket.emit("newMessage", mySharedPreference.getUser().getUserName(), message);
+                socket.emit("newMessage", mySharedPreference.getUser().getUserName(), dataBean.getFriendId(), message);
                 break;
         }
     }
