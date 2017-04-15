@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.osp.projects.androidchatsocketioio.R;
 import com.osp.projects.androidchatsocketioio.model.response.GetFriendsByUserIdResponse;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
     private RecyclerView rcvRooms;
     private LinearLayoutManager linearLayoutManager;
+    private TextView lblUserName;
 
     private MainPresenter mainPresenter;
     private MySharedPreference mySharedPreference;
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         fabAddUser = (FloatingActionButton) findViewById(R.id.fabAddUser);
-
+        lblUserName = (TextView) findViewById(R.id.lblUserName);
         rcvRooms = (RecyclerView) findViewById(R.id.rcvRooms);
         swpRefresh = (SwipeRefreshLayout) findViewById(R.id.swpRefresh);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
         fabAddUser.setOnClickListener(this);
 
-        toolbar.setTitle(mySharedPreference.getUser().getUserName());
+        lblUserName.setText(mySharedPreference.getUser().getUserName());
     }
 
     @Override

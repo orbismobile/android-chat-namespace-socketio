@@ -3,7 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_chat">ChatActivity</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">OrbisMobile</string>
 
     <string name="message_my_user"> %1$s </string>
     <string name="message_other_user"> %1$s : %2$s</string>

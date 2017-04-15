@@ -49,6 +49,7 @@ public class ChatActivity extends AppCompatActivity implements ChatView, View.On
 
     private MySharedPreference mySharedPreference;
 
+    private String roomName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,12 @@ public class ChatActivity extends AppCompatActivity implements ChatView, View.On
         if (!socket.connected()) {
             socket.connect();
         }
+        //ROOM NAME
+        if (mySharedPreference.getUser().getUserId() < dataBean.getFriendId()) {
+            roomName = "ROOM_"+mySharedPreference.getUser().getUserId() + "_" + dataBean.getFriendId();
+        } else {
+            roomName = "ROOM_"+dataBean.getFriendId() + "_" + mySharedPreference.getUser().getUserId();
+        }
 
         assert imgBtnSend != null;
         imgBtnSend.setOnClickListener(this);
@@ -112,8 +119,8 @@ public class ChatActivity extends AppCompatActivity implements ChatView, View.On
                                 Log.e("x-USER CONNECTED", "X-USER CONNECTED ");
                                 break;
                             default:
-                                Log.e("x-ROOM OF USER ", "X-ROOM OF USER " + dataBean.getLinkId());
-                                socket.emit("joinOwnRoom", mySharedPreference.getUser().getUserId(), dataBean.getFriendId());
+                                Log.e("x-ROOM OF USER ", "X-ROOM OF USER " + roomName);
+                                socket.emit("joinOwnRoom", roomName);
                                 break;
                         }
                         isUserConnected = true;
@@ -214,7 +221,10 @@ public class ChatActivity extends AppCompatActivity implements ChatView, View.On
                 break;
             default:
                 addNewMessageFromMyUser(mySharedPreference.getUser().getUserName(), message);
-                socket.emit("newMessage", mySharedPreference.getUser().getUserName(), dataBean.getFriendId(), message);
+                socket.emit("newMessage",
+                        mySharedPreference.getUser().getUserName(),
+                        message,
+                        roomName);
                 break;
         }
     }

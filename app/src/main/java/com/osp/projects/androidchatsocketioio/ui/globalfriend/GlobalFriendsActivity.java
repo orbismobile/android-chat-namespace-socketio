@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
-
 import com.osp.projects.androidchatsocketioio.R;
 import com.osp.projects.androidchatsocketioio.model.request.PostFriendRequest;
 import com.osp.projects.androidchatsocketioio.model.response.GetGlobalFriendsResponse;
@@ -24,7 +23,6 @@ import retrofit2.Response;
 public class GlobalFriendsActivity extends AppCompatActivity {
 
     private RecyclerView rcvGlobalFriend;
-
     private LinearLayoutManager linearLayoutManager;
     private GlobalFriendAdapter globalFriendAdapter;
     private List<GetGlobalFriendsResponse.DataBean> dataBeanList = new ArrayList<>();
@@ -86,7 +84,5 @@ public class GlobalFriendsActivity extends AppCompatActivity {
 
             }
         });
-
     }
-
 }
