@@ -30,7 +30,7 @@ public class GlobalFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_main_friend, parent, false);
         return new FriendItemViewHolder(view);
     }
 
@@ -54,9 +54,9 @@ public class GlobalFriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public FriendItemViewHolder(View itemView) {
             super(itemView);
-            imgFriend = (ImageView) itemView.findViewById(R.id.imgFriend);
+            imgFriend = (ImageView) itemView.findViewById(R.id.imgGroup);
             container = (ConstraintLayout) itemView.findViewById(R.id.container);
-            lblFriendName = (TextView) itemView.findViewById(R.id.lblFriendName);
+            lblFriendName = (TextView) itemView.findViewById(R.id.lblGroupName);
 
             container.setOnClickListener(this);
         }

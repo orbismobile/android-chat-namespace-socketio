@@ -73,7 +73,7 @@ public class LoginPresenterImpl implements LoginPresenter, LoginInteractor.OnLog
 
     @Override
     public void onError() {
-
+        loginInteractor.serviceGetUserByNickname(userNickname, this);
     }
 
     @Override

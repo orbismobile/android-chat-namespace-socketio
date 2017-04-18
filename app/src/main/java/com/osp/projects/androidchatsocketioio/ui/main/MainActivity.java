@@ -88,10 +88,10 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
     @Override
     public void navigateToMain(int itemPosition) {
-        Intent intent = new Intent(this, ChatActivity.class);
+        /*Intent intent = new Intent(this, ChatActivity.class);
         GetFriendsByUserIdResponse.DataBean dataBean = mainPresenter.getListFriends().get(itemPosition);
         intent.putExtra(Constants.ROOM_ENTITY,  dataBean);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     @Override

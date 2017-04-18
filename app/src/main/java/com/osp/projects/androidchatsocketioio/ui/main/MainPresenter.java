@@ -16,7 +16,7 @@ public interface MainPresenter {
     void configMenuOptionAdapter(LoginActivity mainActivity);
     void configRestaurantAdapter(LoginActivity mainActivity);
     void configRecyclerView();
-    List<GetFriendsByUserIdResponse.DataBean> getListFriends();
+    List<Object> getListFriends();
 
 
     void serviceFriends(int userId);
