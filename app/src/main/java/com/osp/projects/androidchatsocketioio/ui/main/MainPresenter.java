@@ -20,4 +20,5 @@ public interface MainPresenter {
 
 
     void serviceFriends(int userId);
+    void serviceGroups(int userId);
 }

@@ -55,7 +55,9 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
         mainPresenter = new MainPresenterImpl(this);
         mainPresenter.configRecyclerView();
+
         mainPresenter.serviceFriends(mySharedPreference.getUser().getUserId());
+        mainPresenter.serviceGroups(mySharedPreference.getUser().getUserId());
 
         fabAddUser.setOnClickListener(this);
 

@@ -77,6 +77,17 @@ public class MainPresenterImpl implements MainPresenter, MainInteractor.OnGetFri
     }
 
     @Override
+    public void serviceGroups(int userId) {
+
+    }
+
+    @Override
+    public void onSuccessfulGetGroup() {
+
+    }
+
+
+    @Override
     public void onError() {
         mainView.hideSwipeRefresh();
         Log.e("ERROR","ERROR");
